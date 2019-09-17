@@ -97,3 +97,11 @@ echo "Install optimized man  --  tldr"
 echo yes|apt install tldr
 
 echo "Done!"
+
+##################################################################
+
+echo "Install sougou input"
+
+
+
+echo "Done!"
