@@ -1,9 +1,15 @@
-!/bin/bash
 
+
+echo "Init"
+
+echo yes|apt-get update 
+
+echo "Done"
+
+#################################
 echo "Install Python3"
 
 echo yes|apt install python3
-
 
 pypath=`which python`
 
@@ -24,14 +30,6 @@ echo "Done! \n"
 
 ##################################################################
 
-echo "Update & Config vim"
-
-echo "set mouse-=a" >> ~/.vimrc
-
-echo "Done!"
-
-##################################################################
-
 echo "Install thefuck "
 
 pip3 install thefuck
@@ -41,6 +39,7 @@ echo fuck|fuck
 source ~/.bashrc
 
 echo "Done \n"
+
 ##################################################################
 
 
@@ -51,6 +50,10 @@ echo "Done \n"
 echo "Update Linux C++ uitls"
 
 echo yes|apt install gdb g++ gcc 
+
+echo yes|apt install cmake pkg-config libtool
+
+
 
 echo "Done!"
 
@@ -100,8 +103,8 @@ echo "Done!"
 
 ##################################################################
 
-echo "Install sougou input"
+echo "Install neovim"
 
-
+echo yes|apt install neovim
 
 echo "Done!"
