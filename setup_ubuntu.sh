@@ -108,3 +108,14 @@ echo "Install neovim"
 echo yes|apt install neovim
 
 echo "Done!"
+
+#################################################################
+
+echo "Install docker chian tool"
+
+echo yes | apt install docker.io
+
+echo yes | apt install docker-compose
+
+echo "Done!"
+################################################################
