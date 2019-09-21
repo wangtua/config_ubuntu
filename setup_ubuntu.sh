@@ -53,7 +53,9 @@ echo yes|apt install gdb g++ gcc
 
 echo yes|apt install cmake pkg-config libtool
 
+echo yes|apt install build-essential
 
+echo yes|apt install gcc-multilib
 
 echo "Done!"
 
@@ -106,6 +108,8 @@ echo "Done!"
 echo "Install neovim"
 
 echo yes|apt install neovim
+
+#echo 
 
 echo "Done!"
 
