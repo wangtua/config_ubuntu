@@ -109,7 +109,9 @@ echo "Install neovim"
 
 echo yes|apt install neovim
 
-#echo 
+echo "alias vim=nvim" >> ~/.bashrc 
+
+source ~/.bashrc
 
 echo "Done!"
 
