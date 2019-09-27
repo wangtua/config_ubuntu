@@ -109,9 +109,16 @@ echo "Install neovim"
 
 echo yes|apt install neovim
 
-echo "alias vim=nvim" >> ~/.bashrc 
+vim_path=`whichi vim` 
 
-source ~/.bashrc
+nvim_path=`which nvim`
+
+mv ${vim_path} ${vim_path}.bak
+
+ln -s ${nvim_path} ${vim_path}
+#echo "alias vim=nvim" >> ~/.bashrc 
+
+#source ~/.bashrc
 
 echo "Done!"
 
