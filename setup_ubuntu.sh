@@ -9,22 +9,34 @@ echo "Done"
 #################################
 echo "Install Python3"
 
+echo yes|apt install python3-pip
+
 echo yes|apt install python3
 
 pypath=`which python`
 
-mv `which python` ${pypath}2
+if [ -z ${pypath} ]; then
+    pypath="/usr/bin/pip"
+else
+    mv `which python` ${pypath}2
+fi
 
-ln -s `which python3` $pypath
+ln -s `which python3` ${pypath}
 
 
 pippath=`which pip`
 
-mv `which pip` ${pippath}2
+if [ -z ${pippath} ]; then
+ # miv `which pip` ${pippath}2;
+     pippath="/usr/bin/pip"  
+else
+     mv `which pip` ${pippath}2;
+fi
 
-ln -s `which pip3` $pippath
 
-pip install ipython
+ln -s `which pip3` ${pippath}
+
+pip3 install ipython
 
 echo "Done! \n"
 
@@ -109,11 +121,15 @@ echo "Install neovim"
 
 echo yes|apt install neovim
 
-vim_path=`whichi vim` 
+vim_path=`which vim` 
 
 nvim_path=`which nvim`
 
-mv ${vim_path} ${vim_path}.bak
+if [ -z ${vim_path} ] ; then
+   vim_path="/usr/bin/vim"
+else
+   mv ${vim_path} ${vim_path}.bak
+fi
 
 ln -s ${nvim_path} ${vim_path}
 #echo "alias vim=nvim" >> ~/.bashrc 
