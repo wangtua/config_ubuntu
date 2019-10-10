@@ -144,7 +144,16 @@ echo "Install docker chian tool"
 
 echo yes | apt install docker.io
 
-echo yes | apt install docker-compose
+echo yes | pip install docker-compose
 
 echo "Done!"
 ################################################################
+
+
+echo "Install lrzsz"
+
+echo yes | apt install lrzsz
+
+echo "Done !"
+
+##############################################################
