@@ -16,7 +16,7 @@ echo yes|apt install python3
 pypath=`which python`
 
 if [ -z ${pypath} ]; then
-    pypath="/usr/bin/pip"
+    pypath="/usr/bin/python"
 else
     mv `which python` ${pypath}2
 fi
@@ -159,6 +159,8 @@ echo "Done !"
 ##############################################################
 
 echo "Install metasploit"
+
+echo yes| apt install curl
 
 curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall &&   chmod 755 msfinstall &&   ./msfinstall
 
