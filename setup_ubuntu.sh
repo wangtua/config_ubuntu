@@ -1,5 +1,11 @@
 
 
+#Tips
+#1) don't change the file /etc/apt/source.list
+########
+
+TOOL_PATH = "./tool_path"
+
 echo "Init"
 
 echo yes|apt-get update 
@@ -9,32 +15,50 @@ echo "Done"
 #################################
 echo "Install Python3"
 
-echo yes|apt install python3-pip
-
 echo yes|apt install python3
 
-pypath=`which python`
+if [ $? -eq 0 ];then
 
-if [ -z ${pypath} ]; then
-    pypath="/usr/bin/python"
-else
-    mv `which python` ${pypath}2
+    pypath=`which python`
+
+    py3path=which python3` 
+
+    if [ -z ${pypath} ]; then
+
+       pypath="/usr/bin/python"
+
+    else
+    
+        mv ${pypath} ${pypath}2
+    
+    fi
+
+    ln -s ${py3path} ${pypath}
+
 fi
 
-ln -s `which python3` ${pypath}
+
+echo yes|apt install python3-pip
+
+if [ $? -eq 0 ];then
+
+    pippath=`which pip`
+    
+    pip3path=`which pip3` 
+
+    if [ -z ${pippath} ]; then
+ 
+        pippath="/usr/bin/pip"  
+
+    else
+        mv ${pippath} ${pippath}2;
+    
+    fi
 
 
-pippath=`which pip`
+    ln -s ${pip3path} ${pippath}
 
-if [ -z ${pippath} ]; then
- # miv `which pip` ${pippath}2;
-     pippath="/usr/bin/pip"  
-else
-     mv `which pip` ${pippath}2;
 fi
-
-
-ln -s `which pip3` ${pippath}
 
 pip3 install ipython
 
@@ -46,7 +70,9 @@ echo "Install thefuck "
 
 pip3 install thefuck
 
-echo fuck|fuck
+fuck
+
+fuck
 
 source ~/.bashrc
 
@@ -87,6 +113,8 @@ echo "Done!"
 
 echo "Install pwntools & pwngdb & peda"
 
+mkdir ${TOOL_PATH}
+
 cd ~/
 git clone https://github.com/scwuaptx/Pwngdb.git 
 cp ~/Pwngdb/.gdbinit ~/
@@ -95,6 +123,7 @@ git clone https://github.com/longld/peda.git ~/peda
 echo "source ~/peda/peda.py" >> ~/.gdbinit
 echo "DONE! debug your program with gdb and enjoy"
 
+cd -
 pip3 install git+https://github.com/arthaud/python3-pwntools.git
 
 echo "Done!"
@@ -121,20 +150,26 @@ echo "Install neovim"
 
 echo yes|apt install neovim
 
-vim_path=`which vim` 
 
-nvim_path=`which nvim`
+if [ $? -eq 0 ];then
 
-if [ -z ${vim_path} ] ; then
-   vim_path="/usr/bin/vim"
-else
-   mv ${vim_path} ${vim_path}.bak
+    vim_path=`which vim` 
+
+    nvim_path=`which nvim`
+
+    if [ -z ${vim_path} ] ; then
+
+       vim_path="/usr/bin/vim"
+
+    else
+
+       mv ${vim_path} ${vim_path}.bak
+
+    fi
+
+    ln -s ${nvim_path} ${vim_path}
+
 fi
-
-ln -s ${nvim_path} ${vim_path}
-#echo "alias vim=nvim" >> ~/.bashrc 
-
-#source ~/.bashrc
 
 echo "Done!"
 
@@ -160,10 +195,7 @@ echo "Done !"
 
 echo "Install metasploit"
 
-echo yes| apt install curl
 
-curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall &&   chmod 755 msfinstall &&   ./msfinstall
-
-echo yes| apt install nmap
+curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > ${TOOL_PATH}"/msfinstall" && chmod 755 ${TOOL_PATH}"/msfinstall" &&   ${TOOL_PATH}"/msfinstall"
 
 echo "Done !!!"
