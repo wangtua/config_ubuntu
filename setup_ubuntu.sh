@@ -1,66 +1,83 @@
 
-
+#
 #Tips
-#1) don't change the file /etc/apt/source.list
+#1) don't modify the file /etc/apt/source.list  
 ########
 
-TOOL_PATH = "./tool_path"
+export LANG="en_US.UTF-8"
 
-echo "Init"
+TOOL_PATH="./tool_path"
+TIME_STAMP=`date +%y%m%d`
+################################################3
 
+echo "Init APT"
 echo yes|apt-get update 
-
 echo "Done"
 
 #################################
-echo "Install Python3"
 
-echo yes|apt install python3
+echo "Installing Python3"
+echo yes|apt install --upgrade python3  >> log.${time_stamp}
 
-if [ $? -eq 0 ];then
+install_status_python3=$?
+
+if [ ! -z `python -V 2>&1|grep -i "python 3"`  ]
+
+    echo "Python3 is already installed and configed"
+    
+elif [ $install_status_python3 -eq 0 ]  # install succeeded 
 
     pypath=`which python`
-
-    py3path=which python3` 
+    py3path=`which python3`
 
     if [ -z ${pypath} ]; then
-
-       pypath="/usr/bin/python"
-
+        pypath="/usr/bin/python"        
     else
-    
-        mv ${pypath} ${pypath}2
-    
-    fi
-
+        mv ${pypath} ${pypath}2.bak        
     ln -s ${py3path} ${pypath}
+    
+
+else
+
+    echo "Error occured while installing Python3 by apt" >&2
 
 fi
 
 
-echo yes|apt install python3-pip
+###############################################################
 
-if [ $? -eq 0 ];then
+
+echo "Installing pip3"
+echo yes|apt install --upgrade python3-pip >> log.${time_stamp}
+
+install_status_pip3=$?
+
+if [ ! -z `pip -V 2>&1|grep -i "python 3"`  ]; then
+
+    echo "Python3 is already installed and configed"
+    
+elif [ $install_status_pip3 -eq 0 ] ;then # install succeeded 
 
     pippath=`which pip`
-    
-    pip3path=`which pip3` 
+    pip3path=`which pip3`
 
     if [ -z ${pippath} ]; then
- 
-        pippath="/usr/bin/pip"  
-
+        pippath="/usr/bin/pip"        
     else
-        mv ${pippath} ${pippath}2;
-    
-    fi
-
-
+        mv ${pippath} ${pippath}2.bak        
     ln -s ${pip3path} ${pippath}
+    
+
+else
+
+    echo "Error occured while installing pip3 by apt" >&2
 
 fi
 
-pip3 install ipython
+#########################################################
+echo "Installing iPython"
+
+pip3 install ipython >> log.${time_stamp}
 
 echo "Done! \n"
 
@@ -68,7 +85,7 @@ echo "Done! \n"
 
 echo "Install thefuck "
 
-pip3 install thefuck
+pip3 install thefuck >> log.${time_stamp}
 
 fuck
 
@@ -87,13 +104,13 @@ echo "Done \n"
 
 echo "Update Linux C++ uitls"
 
-echo yes|apt install gdb g++ gcc 
+echo yes|apt install --upgrade gdb g++ gcc >> log.${time_stamp}
 
-echo yes|apt install cmake pkg-config libtool
+echo yes|apt install --upgrade cmake pkg-config libtool >> log.${time_stamp}
 
-echo yes|apt install build-essential
-
-echo yes|apt install gcc-multilib
+echo yes|apt install --upgrade build-essential >> log.${time_stamp}
+ 
+echo yes|apt install --upgrade gcc-multilib >> log.${time_stamp}
 
 echo "Done!"
 
@@ -101,7 +118,7 @@ echo "Done!"
 
 echo "Install & Config git"
 
-echo yes|apt install git
+echo yes|apt install --upgrade git >> log.${time_stamp}
 
 #git config --global user.name="XXXXXXXXXX"
 
@@ -132,7 +149,7 @@ echo "Done!"
 
 echo "Install optimized mysql client -- mycli"
 
-echo yes|apt install mycli
+echo yes|apt install --upgrade mycli >> log.${time_stamp}
 
 echo "Done!"
 
@@ -140,7 +157,7 @@ echo "Done!"
 
 echo "Install optimized man  --  tldr"
 
-echo yes|apt install tldr
+echo yes|apt install --upgrade tldr >> log.${time_stamp}
 
 echo "Done!"
 
@@ -148,26 +165,29 @@ echo "Done!"
 
 echo "Install neovim"
 
-echo yes|apt install neovim
+echo yes|apt install --upgrade neovim >> log.${time_stamp}
 
+install_status_nvim=$?
 
-if [ $? -eq 0 ];then
+if [ ! -z `vim --help 2>&1|grep -i "nvim"`  ]; then
 
-    vim_path=`which vim` 
+    echo "neovim is already installed and configed"
+    
+elif [ $install_status_nvim -eq 0 ] ;then # install succeeded 
 
-    nvim_path=`which nvim`
+    vimpath=`which vim`
+    nvimpath=`which nvim`
 
-    if [ -z ${vim_path} ] ; then
-
-       vim_path="/usr/bin/vim"
-
+    if [ -z ${vimpath} ]; then
+        vimpath="/usr/bin/vim"        
     else
+        mv ${vimpath} ${vimpath}.bak        
+    ln -s ${nvimpath} ${vimpath}
+    
 
-       mv ${vim_path} ${vim_path}.bak
+else
 
-    fi
-
-    ln -s ${nvim_path} ${vim_path}
+    echo "Error occured while installing neovim by apt" >&2
 
 fi
 
@@ -177,9 +197,9 @@ echo "Done!"
 
 echo "Install docker chian tool"
 
-echo yes | apt install docker.io
+echo yes | apt install --upgrade docker.io >> log.${time_stamp}
 
-echo yes | pip install docker-compose
+echo yes | pip install --upgrade docker-compose >> log.${time_stamp}
 
 echo "Done!"
 ################################################################
@@ -187,14 +207,13 @@ echo "Done!"
 
 echo "Install lrzsz"
 
-echo yes | apt install lrzsz
+echo yes | apt install --upgrade lrzsz >> log.${time_stamp}
 
 echo "Done !"
 
 ##############################################################
 
 echo "Install metasploit"
-
 
 curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > ${TOOL_PATH}"/msfinstall" && chmod 755 ${TOOL_PATH}"/msfinstall" &&   ${TOOL_PATH}"/msfinstall"
 
