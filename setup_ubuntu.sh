@@ -21,12 +21,12 @@ echo yes|apt install --upgrade python3  >> log.${time_stamp}
 
 install_status_python3=$?
 
-if [ ! -z `python -V 2>&1|grep -i "python 3"`  ]
+if [ ! -z `python -V 2>&1|grep -i "python 3"`  ];then
 
     echo "Python3 is already installed and configed"
     
-elif [ $install_status_python3 -eq 0 ]  # install succeeded 
-
+elif [ $install_status_python3 -eq 0 ]; then  # install succeeded 
+    echo "install "
     pypath=`which python`
     py3path=`which python3`
 
@@ -34,9 +34,9 @@ elif [ $install_status_python3 -eq 0 ]  # install succeeded
         pypath="/usr/bin/python"        
     else
         mv ${pypath} ${pypath}2.bak        
-    ln -s ${py3path} ${pypath}
-    
+    fi
 
+    ln -s ${py3path} ${pypath}
 else
 
     echo "Error occured while installing Python3 by apt" >&2
@@ -64,9 +64,10 @@ elif [ $install_status_pip3 -eq 0 ] ;then # install succeeded
     if [ -z ${pippath} ]; then
         pippath="/usr/bin/pip"        
     else
-        mv ${pippath} ${pippath}2.bak        
-    ln -s ${pip3path} ${pippath}
-    
+        mv ${pippath} ${pippath}2.bak      
+    fi
+  
+    ln -s ${pip3path} ${pippath}   
 
 else
 
@@ -181,10 +182,11 @@ elif [ $install_status_nvim -eq 0 ] ;then # install succeeded
     if [ -z ${vimpath} ]; then
         vimpath="/usr/bin/vim"        
     else
-        mv ${vimpath} ${vimpath}.bak        
+        mv ${vimpath} ${vimpath}.bak  
+    fi
+      
     ln -s ${nvimpath} ${vimpath}
     
-
 else
 
     echo "Error occured while installing neovim by apt" >&2
@@ -218,3 +220,12 @@ echo "Install metasploit"
 curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > ${TOOL_PATH}"/msfinstall" && chmod 755 ${TOOL_PATH}"/msfinstall" &&   ${TOOL_PATH}"/msfinstall"
 
 echo "Done !!!"
+
+################################################################
+
+echo "search sploit"
+
+# https://github.com/offensive-security/exploitdb
+# https://www.freebuf.com/sectool/146106.html
+echo yes | apt -y install exploitdb 
+echo "Done!!!"
