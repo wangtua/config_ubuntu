@@ -7,7 +7,7 @@
 export LANG="en_US.UTF-8"
 
 TOOL_PATH="./tool_path"
-TIME_STAMP=`date +%y%m%d`
+TIME_STAMP="`date +%y%m%d`"
 ################################################3
 
 echo "Init APT"
@@ -18,10 +18,10 @@ echo "Done"
 
 echo "Installing Python3"
 echo yes|apt install --upgrade python3  >> log.${time_stamp}
-
+echo yes|apt install --upgrade python3-dev
 install_status_python3=$?
 
-if [ ! -z `python -V 2>&1|grep -i "python 3"`  ];then
+if [ ! -z "`python -V 2>&1|grep -i 'python 3'`"  ];then
 
     echo "Python3 is already installed and configed"
     
@@ -52,9 +52,9 @@ echo yes|apt install --upgrade python3-pip >> log.${time_stamp}
 
 install_status_pip3=$?
 
-if [ ! -z `pip -V 2>&1|grep -i "python 3"`  ]; then
+if [ ! -z "`pip -V 2>&1|grep -i 'python 3'`"  ]; then
 
-    echo "Python3 is already installed and configed"
+    echo "pip3 is already installed and configed"
     
 elif [ $install_status_pip3 -eq 0 ] ;then # install succeeded 
 
@@ -91,6 +91,8 @@ pip3 install thefuck >> log.${time_stamp}
 fuck
 
 fuck
+
+echo "done"
 
 source ~/.bashrc
 
@@ -170,7 +172,7 @@ echo yes|apt install --upgrade neovim >> log.${time_stamp}
 
 install_status_nvim=$?
 
-if [ ! -z `vim --help 2>&1|grep -i "nvim"`  ]; then
+if [ ! -z '`vim --help 2>&1|grep -i "nvim"`'  ]; then
 
     echo "neovim is already installed and configed"
     
